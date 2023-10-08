@@ -18,3 +18,16 @@ services:
       - ./MagicBox/Rails:/app
     ports:
       - "3100:3100"
+
+  # MySQL用のコンテナ
+  db:
+    image: mysql:8.0.33
+    volumes:
+      - data-volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+
+volumes:
+  data-volume:
