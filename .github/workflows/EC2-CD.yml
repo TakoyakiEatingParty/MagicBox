@@ -1,0 +1,33 @@
+name: EC2 auto deploy
+
+on:
+ pull_request:
+   branches: [ main ]
+   types: [closed]
+
+ workflow_dispatch:
+
+jobs:
+ build:
+   runs-on: ubuntu-latest
+
+   steps:
+     # BranchをCheckout
+     - name: Checkout
+       uses: actions/checkout@v2
+
+     # デプロイする
+     - name: Deploy
+       uses: appleboy/ssh-action@master
+       with:
+          host: ${{ secrets.EC2_HOST_NAME }}
+          username: ${{ secrets.EC2_USER_NAME }}
+          key: ${{ secrets.GIT_PRIVATE_KEY }}
+          script: |
+            cd /home/ubuntu/develop/MagicBox
+            git pull origin main
+            docker build -t my-app-name .
+            # Dockerの起動（もし、前回のコンテナが動いていたら停止して削除）
+            docker stop my-app-container || true
+            docker rm my-app-container || true
+            docker run -d --name my-app-container my-app-name
