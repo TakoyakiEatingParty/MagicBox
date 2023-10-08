@@ -1,12 +1,14 @@
 # ベースイメージの指定
 FROM ruby:3.2.2
 
+ENV HOME /clone
 # コンテナ内の作業ディレクトリを設定
 WORKDIR /app
 
 # 必要なGemファイルとGemをインストール
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler && bundle install
+RUN apt-get update && apt-get install -y git
 
 # アプリケーションのソースコードをコピー
 COPY . .
@@ -17,4 +19,7 @@ RUN rails db:migrate
 
 # アプリケーションの起動
 CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3100"]
+
+#WORKDIR $HOME
+#RUN git clone https://github.com/nematatu/nematatu.github.io.git 
 
