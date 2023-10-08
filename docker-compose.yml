@@ -7,7 +7,6 @@ services:
       context: ./MagicBox/React/
     volumes: 
       - ./MagicBox/React:/src
-    command: 'npm start'
     ports:
       - "3000:3000"
 
