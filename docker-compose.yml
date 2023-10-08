@@ -19,6 +19,14 @@ services:
     ports:
       - "3100:3100"
 
+  auth:
+    build:
+      context: ./MagicBox/Auth/
+    volumes: 
+      - ./MagicBox/Auth:/app
+    ports:
+      - "3200:3200"
+
   # MySQL用のコンテナ
   db:
     image: mysql:8.0.33
