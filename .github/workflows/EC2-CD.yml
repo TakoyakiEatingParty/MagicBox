@@ -26,8 +26,6 @@ jobs:
           script: |
             cd /home/ubuntu/develop/MagicBox
             git pull origin main
-            docker build -t my-app-name .
-            # Dockerの起動（もし、前回のコンテナが動いていたら停止して削除）
-            docker stop my-app-container || true
-            docker rm my-app-container || true
-            docker run -d --name my-app-container my-app-name
+            docker-compose build
+            docker-compose down
+            docker-compose up -d
