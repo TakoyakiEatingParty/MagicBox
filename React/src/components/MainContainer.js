@@ -7,6 +7,8 @@ import TextboxAndButton from './textbox_and_button';
 let excuted=false;
 let ids;
 class MainContainer extends React.Component{
+
+  
    rails_endpoint='http://localhost:3100/products';
   constructor(props){
     super(props)
